@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         var inst = Instantiate(_playerBullet, transform.position, Quaternion.identity);
         if (scale.x > 0)
         {
-            inst.GetComponent<BulletMovement>().speed = (-1) * inst.GetComponent<BulletMovement>().speed;
+            inst.GetComponent<BulletMovement>().SetSpeed((-1) * inst.GetComponent<BulletMovement>().GetSpeed());
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletMovement : MonoBehaviour
 {
     [Range(0f, 999f)]
-    public float speed = 5f;
+    private float speed = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,5 +17,15 @@ public class BulletMovement : MonoBehaviour
     {
         // Move the object to the left
         transform.Translate(Vector2.left * speed * Time.deltaTime);
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
     }
 }
