@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class EnemyThings : MonoBehaviour
 {
-    [SerializeField] private float healthPoints = 5.0f;
-    [SerializeField] private float appleDmg = 1.0f;
+    public float Hitpoints;
+    public float MaxHitpoints = 5;
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Start()
     {
-        if (collision.gameObject.CompareTag("Apple"))
+        Hitpoints = MaxHitpoints;
+    }
+
+    public void TakeHit(float damage)
+    {
+        Hitpoints -= damage;
+        if(Hitpoints <= 0)
         {
-            if (healthPoints > 0)
-            {
-                healthPoints -= appleDmg;
-                Destroy(collision.gameObject);
-            }
-            if (healthPoints <= 0)
-            {
-                Destroy(gameObject);
-                Destroy(collision.gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

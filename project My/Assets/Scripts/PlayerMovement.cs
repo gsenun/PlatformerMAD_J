@@ -25,7 +25,15 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private GameObject _groundTestLineStart;
     [SerializeField] private GameObject _groundTestLineEnd;
-    [SerializeField] private GameObject _playerBullet;
+
+    [SerializeField] private Transform LaunchOffset;
+    [SerializeField] private BulletMovement projectilePrefab;
+
+
+    [SerializeField] private GameObject bomb;
+    [SerializeField] private Transform playerTransform;
+
+
     Vector3 scale;
 
 
@@ -35,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         scale = transform.localScale;
         _animator = GetComponent<Animator>();
+
+        //This might be doing something?
+        GameObject bullet = GameObject.FindGameObjectWithTag("Apple");
+        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 
     // Update is called once per frame
@@ -62,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Bomb();
         }
     }
     private void FixedUpdate()
@@ -145,10 +162,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Shoot()
     {
-        var inst = Instantiate(_playerBullet, transform.position, Quaternion.identity);
+        var inst = Instantiate(projectilePrefab, LaunchOffset.position, transform.rotation);
         if (scale.x > 0)
         {
             inst.GetComponent<BulletMovement>().SetSpeed((-1) * inst.GetComponent<BulletMovement>().GetSpeed());
+        }
+    }
+
+
+    private void Bomb()
+    {
+        if (_isGrounded)
+        {
+            Instantiate(bomb, playerTransform.position, Quaternion.identity);
         }
     }
 }

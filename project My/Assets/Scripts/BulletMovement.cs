@@ -28,4 +28,15 @@ public class BulletMovement : MonoBehaviour
     {
         return speed;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var enemy = collision.collider.GetComponent<EnemyThings>();
+        if (enemy)
+        {
+            enemy.TakeHit(1);
+        }
+
+        Destroy(gameObject);
+    }
 }
